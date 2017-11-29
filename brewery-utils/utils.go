@@ -27,14 +27,9 @@ type Input struct {
 	OptionalTags OpTags `json:"optional_tags,omitempty"`
 }
 
-type Output struct {
-	OutputType string `json:"output_type"`
-}
-
 type Config struct {
 	Broker BrokerConfig `json:"broker"`
 	Inputs []Input `json:"inputs,omitempty"`
-	Outputs Output `json:"outputs"`
 }
 
 //LoadServerConfig will parse though the config.json file and get the redis broker endpoints and return the config.Config that can be used to instantiate a machinery Server. 

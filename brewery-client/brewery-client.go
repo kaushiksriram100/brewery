@@ -38,6 +38,7 @@ func main() {
 	//Register all the tasks as defined in tasks.go. Not using breweryutils for this. Just lazy
 
 	server.RegisterTask("Say", Say)
+	server.RegisterTask("CommandExecutor", CommandExecutor)
 
 	workername, err := os.Hostname()
 	if err != nil {

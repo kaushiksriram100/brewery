@@ -35,23 +35,20 @@ func main() {
 		return
 	}
 
-//start from here - you have all data in brewerycnf now. Need to send them to a new task (eg- metriccollector). Create a new task in brewery-tasks.go
-	sayTask := &tasks.Signature{
-		Name: "Say",
-		Args: []tasks.Arg{tasks.Arg{Type: "string",Value: "sriram"}},
+//Send each check element in the inputs array to the queue
+
+	for _,v := range brewerycnf.Inputs {
+
+		sayTask := &tasks.Signature{
+		Name: "CommandExecutor",
+		Args: []tasks.Arg{tasks.Arg{Type: "string",Value: v.CheckCommand}},
+		}
+
+		_,_ = server.SendTask(sayTask)
+
 	}
 
+//Receive the outputs of all the checks and start processing the output.. 
 
-
-	asyncResult, err := server.SendTask(sayTask)
-
-	if err != nil {
-		fmt.Println(err)
-		fmt.Printf("didn't send task, exiting\n")
-		return
-	}
-
-	taskState := asyncResult.GetState()
-	fmt.Println(taskState.State)
 
 }
