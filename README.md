@@ -28,7 +28,7 @@ m-c02jn0m1f1g4:parallelping skaush1$ cat /var/tmp/brewery-client.json
         ],
         "outputs": {
                 "graphite": {
-                        "endpoint": "dfw-mon12.prod.walmart.com",
+                        "endpoint": "server-graphite.jiljunjuk.com",
                         "port": 2003
                 }
 
