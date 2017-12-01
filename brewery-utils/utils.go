@@ -14,22 +14,26 @@ type BrokerConfig struct {
 	DefaultQueue string `json:"queue"`
 }
 
-type OpTags struct {
-	Tag1 string `json:"tag1,omitempty"`
-	TagValue1 string `json:"value1,omitempty"`
-	Tag2 string `json:"tag2,omitempty"`
-	TagValue2 string `json:"value2,omitempty"`
-}
 
 type Input struct {
 	CheckName string `json:"check_name"`
 	CheckCommand string `json:"check_command"`
-	OptionalTags OpTags `json:"optional_tags,omitempty"`
+}
+
+type Graphite struct {
+	Graphiteendpoints string `json:"endpoint"`
+	Graphiteport int `json:"port"`
+}
+
+type Output struct {
+	GraphiteOutput Graphite `json:"graphite,omitempty"`
+
 }
 
 type Config struct {
 	Broker BrokerConfig `json:"broker"`
 	Inputs []Input `json:"inputs,omitempty"`
+	Outputs Output `json:"outputs"`
 }
 
 //LoadServerConfig will parse though the config.json file and get the redis broker endpoints and return the config.Config that can be used to instantiate a machinery Server. 
@@ -56,4 +60,3 @@ func LoadServerConfig(configfile string) (Config, error) {
 
 
 }
-

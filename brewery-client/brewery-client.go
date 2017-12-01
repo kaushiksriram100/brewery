@@ -45,7 +45,7 @@ func main() {
 		fmt.Printf("can't get hostname\n")
 		return 
 	}
-	worker := server.NewWorker(workername,5)
+	worker := server.NewWorker(workername,1000)
 
 	err = worker.Launch()
 
