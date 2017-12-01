@@ -32,6 +32,11 @@ func SendToGraphite (value []reflect.Value,Graphite *graphite.Graphite, wrkrpool
 
  	for _,v := range slice1 {
  		breakmetrics := strings.Split(strings.TrimSpace(v)," ") //for each graphite metric now split into chunks of slices and assign to our graphite function
+ 		
+ 		if len(breakmetrics) != 3 { //check if the metrics align to graphite format, if not drop it. 
+ 			wrkrpool <- struct{}{}  //give back the pool so that other tasks can be executed in dispatcher.go
+ 			runtime.Goexit()
+ 		}
  		metrics.Name = breakmetrics[0]
  		metrics.Value = breakmetrics[1]
 
