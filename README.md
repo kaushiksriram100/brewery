@@ -39,6 +39,8 @@ m-c02jn0m1f1g4:parallelping skaush1$ cat /var/tmp/brewery-client.json
 plugin outputs must be like this else it will get dropped. 
 
 ```
+test.test.distrib 20 1512097588
+test.test.testdis 78 1512097588
 
 ```
 
