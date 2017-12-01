@@ -65,6 +65,4 @@ test.test.testdis 78 1512097588
 
 ```
 
-
-
 NOTE: please teach me if something is not right in the code. I am new to this. PRs welcome. Need to add logging features. I will do that. 
