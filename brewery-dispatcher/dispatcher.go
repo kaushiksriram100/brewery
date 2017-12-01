@@ -82,7 +82,7 @@ func main() {
   }()
 
 
-// do a for loop to send tasks every n minutes.. right now hardcoding sleep time as 60 sec
+// do a for loop to send tasks every 'n' minutes.. right now hardcoding sleep time as 60 sec
 
 
 for {
@@ -93,10 +93,10 @@ for {
 
 	if err != nil {
 		fmt.Println("failed to send tasks")
-		return
+		continue
 	}
 
-//Receive the outputs of all the checks and start processing the output.. PENDING
+//Receive the results of all the checks and start processing the output.. PENDING
 
 	//Create a graphite object and send it over. 
 
@@ -104,7 +104,7 @@ for {
 
 	if err != nil {
 		fmt.Println("sorry. could not connect to graphite. Can't process metrics for now")
-		return
+		continue
 	}
 
 	for _, asyncResult := range asyncResults {
@@ -119,7 +119,7 @@ for {
   		
 	}
 
-	duration := time.Second * 60
+	duration := time.Second * time.Duration(brewerycnf.DispatcherSettings.CollectionInterval)
   	time.Sleep(duration)
 
 }

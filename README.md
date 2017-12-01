@@ -16,24 +16,32 @@ m-c02jn0m1f1g4:parallelping skaush1$ cat /var/tmp/brewery-client.json
                 "hostname": "localhost:6379",
                 "queue": "brewery_tasks"
         },
+        "settings": {
+                "interval": 120
+        },
         "inputs": [
-                {
-                        "check_name": "check_mac_disk",
-                        "check_command": "/Users/skaush1/Documents/test_plugins/check_ping_metrics -u www.google.com -p 443"
-                },
                 {
                         "check_name": "check_ping",
                         "check_command": "/Users/skaush1/Documents/test_plugins/test.sh"
+                },
+                {
+                        "check_name": "check_ping1",
+                        "check_command": "/Users/skaush1/Documents/test_plugins/test2.sh"
+                },
+                {
+                        "check_name": "check_ping1",
+                        "check_command": "/Users/skaush1/Documents/test_plugins/shouldnotwork.sh"
                 }
         ],
         "outputs": {
                 "graphite": {
-                        "endpoint": "server-graphite.jiljunjuk.com",
+                        "endpoint": "graphite-endpoint.jiljunjak.com",
                         "port": 2003
                 }
 
         }
 }
+
 ```
 
 plugin outputs must be like this else it will get dropped. 

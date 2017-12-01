@@ -30,8 +30,13 @@ type Output struct {
 
 }
 
+type DispSettings struct {
+	CollectionInterval int 	`json:"interval"`
+}
+
 type Config struct {
 	Broker BrokerConfig `json:"broker"`
+	DispatcherSettings DispSettings `json:"settings"`
 	Inputs []Input `json:"inputs,omitempty"`
 	Outputs Output `json:"outputs"`
 }
