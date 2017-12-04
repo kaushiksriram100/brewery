@@ -24,9 +24,9 @@ func CommandExecutor(checkcommand string) (string, error) {
 	chkcmd := strings.Fields(checkcommand)
 
 	head := chkcmd[0]
-	chkcmd = chkcmd[1:len(chkcmd)] //now chkcmd is a slice with each ags. 
+	chkcmd = chkcmd[1:len(chkcmd)] //now chkcmd is a slice with each ags.
 
-	ctx, cancel := context.WithTimeout(context.Background(), 3100*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 
 
 	defer cancel()

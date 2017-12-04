@@ -28,12 +28,13 @@ func SendToGraphite (value []reflect.Value,Graphite *graphite.Graphite, wrkrpool
  		runtime.Goexit()
  	}
 
- 	slice1 := strings.Split(strings.Trim(result, "\n"), "\n")  //break the full result into chunks of slices. trim leading and trailing new lines
+ 	slice1 := strings.Split(strings.Trim(result, "\n"), "\n")  //break the full result into chunks of slices. trim leading and trailing new lines. strings.Trim is simply removing the last \n at the end of metric (after which we return to the shel prompt)
 
  	for _,v := range slice1 {
  		breakmetrics := strings.Split(strings.TrimSpace(v)," ") //for each graphite metric now split into chunks of slices and assign to our graphite function
  		
- 		if len(breakmetrics) != 3 { //check if the metrics align to graphite format, if not drop it. 
+ 		if len(breakmetrics) != 3 { //check if the metrics align to graphite format, if not drop it here and give the pool back. 
+ 			fmt.Println("Not graphite format.. skipping - ", breakmetrics)
  			wrkrpool <- struct{}{}  //give back the pool so that other tasks can be executed in dispatcher.go
  			runtime.Goexit()
  		}
