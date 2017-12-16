@@ -1,54 +1,51 @@
 package utils
 
 import (
-//"fmt"
-"errors"
-"encoding/json"
-"io/ioutil"
+	//"fmt"
+	"encoding/json"
+	"errors"
+	"io/ioutil"
 )
 
-
 type BrokerConfig struct {
-	MessageBroker string `json:"brokertype"`  //We will keep brokertype modular so that it's easy in future to add other brokers like RMQ
-	BrokerHost string  `json:"hostname"`
-	DefaultQueue string `json:"queue"`
+	MessageBroker string `json:"brokertype"` //We will keep brokertype modular so that it's easy in future to add other brokers like RMQ
+	BrokerHost    string `json:"hostname"`
+	DefaultQueue  string `json:"queue"`
 }
 
-
 type Input struct {
-	CheckName string `json:"check_name"`
+	CheckName    string `json:"check_name"`
 	CheckCommand string `json:"check_command"`
 }
 
 type Graphite struct {
 	Graphiteendpoints string `json:"endpoint"`
-	Graphiteport int `json:"port"`
+	Graphiteport      int    `json:"port"`
 }
 
 type Output struct {
 	GraphiteOutput Graphite `json:"graphite,omitempty"`
-
 }
 
 type DispSettings struct {
-	CollectionInterval int 	`json:"interval"`
+	CollectionInterval int `json:"interval"`
 }
 
 type Config struct {
-	Broker BrokerConfig `json:"broker"`
+	Broker             BrokerConfig `json:"broker"`
 	DispatcherSettings DispSettings `json:"settings"`
-	Inputs []Input `json:"inputs,omitempty"`
-	Outputs Output `json:"outputs"`
+	Inputs             []Input      `json:"inputs,omitempty"`
+	Outputs            Output       `json:"outputs,omitempty"`
 }
 
-//LoadServerConfig will parse though the config.json file and get the redis broker endpoints and return the config.Config that can be used to instantiate a machinery Server. 
+//LoadServerConfig will parse though the config.json file and get the redis broker endpoints and return the config.Config that can be used to instantiate a machinery Server.
 func LoadServerConfig(configfile string) (Config, error) {
 	var conf Config
 
 	//First read the json from the config file
 	data, err := ioutil.ReadFile(configfile)
 	if err != nil {
-		
+
 		return conf, errors.New("unable to read config file")
 	}
 
@@ -59,9 +56,6 @@ func LoadServerConfig(configfile string) (Config, error) {
 		return conf, errors.New("Incorrect Json format")
 	}
 
-	
-
-	return conf, nil  //return conf (pass as value). Configs are not very big so it's okay to pass as value, IMO
-
+	return conf, nil //return conf (pass as value). Configs are not very big so it's okay to pass as value, IMO
 
 }

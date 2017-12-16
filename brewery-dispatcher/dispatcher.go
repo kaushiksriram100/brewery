@@ -12,6 +12,12 @@ import (
 	graphite "github.com/marpaia/graphite-golang"
 )
 
+func IntervalSleep(interval int) {
+	duration := time.Second * time.Duration(interval)
+	time.Sleep(duration)
+	return
+}
+
 func main() {
 
 	configfile := flag.String("c", "/var/tmp/brewery-conf.json", "- json format config file with broker end points")
@@ -80,10 +86,9 @@ func main() {
 
 		if err != nil {
 			fmt.Println("failed to send tasks")
+			IntervalSleep(brewerycnf.DispatcherSettings.CollectionInterval)
 			continue
 		}
-
-		//Receive the results of all the checks and start processing the output.. PENDING
 
 		//Create a graphite object and send it over.
 
@@ -91,13 +96,15 @@ func main() {
 
 		if err != nil {
 			fmt.Println("sorry. could not connect to graphite. Can't process metrics for now")
+			IntervalSleep(brewerycnf.DispatcherSettings.CollectionInterval)
 			continue
 		}
 
 		for _, asyncResult := range asyncResults {
-			results, err := asyncResult.Get(time.Duration(time.Millisecond * 10))
+			results, err := asyncResult.Get(time.Duration(time.Millisecond * 15))
 			if err != nil {
 				fmt.Println("failed to process results for-:", asyncResult.Signature.Name, asyncResult.Signature.UUID)
+				IntervalSleep(brewerycnf.DispatcherSettings.CollectionInterval)
 				continue
 			}
 
@@ -106,9 +113,7 @@ func main() {
 
 		}
 
-		duration := time.Second * time.Duration(brewerycnf.DispatcherSettings.CollectionInterval)
-		time.Sleep(duration)
-
+		IntervalSleep(brewerycnf.DispatcherSettings.CollectionInterval)
 	}
 
 }
